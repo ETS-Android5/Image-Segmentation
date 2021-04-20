@@ -26,7 +26,8 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
 
     override fun appContext(): Context = applicationContext
     private val TAG = "EditorActivity"
-
+    var prevBrightnessProgress = 0
+    var prevContrastProgress = 0
     private lateinit var backButton: ImageView
     private lateinit var saveButton: TextView
     private lateinit var imageView: ImageView
@@ -77,6 +78,7 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
             setDisplayHomeAsUpEnabled(false)
             setDisplayShowHomeEnabled(false)
         }
+        seekBar.max = 20;
     }
 
     private fun openCvInit() {
@@ -103,8 +105,8 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
                     val selectedImage = intent.data!!
                     val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
                     val cursor = contentResolver.query(
-                        selectedImage,
-                        filePathColumn, null, null, null
+                            selectedImage,
+                            filePathColumn, null, null, null
                     )
                     if (cursor != null) {
                         cursor.moveToFirst()
@@ -149,6 +151,19 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
         if (FILTERS_SLIDER_ARRAY.indexOf(selectedFilter) >= 0) {
             seekBar.visibility = View.VISIBLE
             seekBar.setOnSeekBarChangeListener(this)
+            when (FILTERS_SLIDER_ARRAY.indexOf(selectedFilter)) {
+                0 -> {
+                    seekBar.progress = prevBrightnessProgress
+                    return
+                }
+                1 -> {
+                    seekBar.progress = prevContrastProgress
+                    return
+                }
+                else -> return
+            }
+
+
         } else {
             seekBar.visibility = View.GONE
         }
@@ -160,11 +175,23 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
         println(selectedFilter)
         when (FILTERS_SLIDER_ARRAY.indexOf(selectedFilter)) {
             0 -> {
-                presenter.brightness(bitmap, progress)
+                val diff = progress - prevBrightnessProgress
+                if (diff > 0) {
+                    presenter.increaseBrightness(bitmap, progress)
+                } else {
+                    presenter.decreaseBrightness(bitmap, progress)
+                }
+                prevBrightnessProgress = progress
                 return
             }
             1 -> {
-                presenter.contrast(bitmap, progress)
+                val diff = progress - prevContrastProgress
+                if (diff > 0) {
+                    presenter.increaseContrast(bitmap, progress)
+                } else {
+                    presenter.decreaseContrast(bitmap, progress)
+                }
+                prevContrastProgress = progress
                 return
             }
             else -> return
@@ -176,8 +203,9 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
 
     override fun onStopTrackingTouch(seekBar: SeekBar) {}
 
-    override fun setBitmap(bitmap: Bitmap) {
-        imageView.setImageBitmap(bitmap)
+    override fun setBitmap(bitmapp: Bitmap) {
+        imageView.setImageBitmap(bitmapp)
+        bitmap=bitmapp
     }
 
     override fun onDestroy() {

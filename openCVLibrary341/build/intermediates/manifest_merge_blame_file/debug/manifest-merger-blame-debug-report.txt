@@ -5,10 +5,10 @@
 5    android:versionName="3.4.1" >
 6
 7    <uses-sdk
-7-->D:\Cursuri\procesare_imagini_mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:7:5-17
+7-->C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:7:5-17
 8        android:minSdkVersion="8"
-8-->D:\Cursuri\procesare_imagini_mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:7:5-17
+8-->C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:7:5-17
 9        android:targetSdkVersion="26" />
-9-->D:\Cursuri\procesare_imagini_mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:7:5-17
+9-->C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:7:5-17
 10
 11</manifest>

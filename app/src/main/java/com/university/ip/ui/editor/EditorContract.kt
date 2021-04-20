@@ -12,9 +12,13 @@ interface EditorContract {
 
     interface Presenter {
         //functions that are going to use our library
-        fun brightness(bitmap: Bitmap, value: Int)
+        fun increaseBrightness(bitmap: Bitmap, value: Int)
 
-        fun contrast(bitmap: Bitmap, value: Int)
+        fun increaseContrast(bitmap: Bitmap, value: Int)
+
+        fun decreaseBrightness(bitmap: Bitmap, value: Int)
+
+        fun decreaseContrast(bitmap: Bitmap, value: Int)
 
     }
 }

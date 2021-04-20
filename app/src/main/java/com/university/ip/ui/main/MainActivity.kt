@@ -50,8 +50,7 @@ class MainActivity : AppCompatActivity(), MainContract.View, View.OnClickListene
         adapter = PhotosDisplayAdapter(appContext(), this)
         photosRecycler.adapter = adapter
 
-        photoList =
-            presenter.getAllPicturesFromFolder(appContext()) // - this is where we initialize the photoList
+        photoList =presenter.getAllPicturesFromFolder(appContext()) // - this is where we initialize the photoList
         adapter.setMediaList(photoList!!)
 
         toggleVisibility()
