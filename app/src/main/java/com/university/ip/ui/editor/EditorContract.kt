@@ -20,5 +20,14 @@ interface EditorContract {
 
         fun decreaseContrast(bitmap: Bitmap, value: Int)
 
+        fun toGray(bitmap: Bitmap, value: Int)
+
+        fun toBinary(bitmap: Bitmap,threshold: Int)
+
+        fun blur(bitmap: Bitmap, value: Int)
+
+        fun medianBlur(bitmap: Bitmap, value: Int)
+
+        fun Convolution2d(bitmap: Bitmap, value: Int)
     }
 }

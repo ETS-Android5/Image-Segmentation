@@ -19,6 +19,7 @@ import com.university.ip.R
 import com.university.ip.ui.main.MainActivity
 import com.university.ip.util.files.FileSaver.Companion.IMAGE_MIME_TYPE
 import com.university.ip.util.files.FileSaverLegacy
+import kotlinx.android.synthetic.main.photos_display_item.*
 import org.opencv.android.OpenCVLoader
 
 class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickListener,
@@ -28,9 +29,14 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
     private val TAG = "EditorActivity"
     var prevBrightnessProgress = 0
     var prevContrastProgress = 0
+    var prevBinarizingProgress = 0
+    var prevBlurProgress = 0
+    var prevMedianBlurProgress = 0
     private lateinit var backButton: ImageView
     private lateinit var saveButton: TextView
     private lateinit var imageView: ImageView
+    private lateinit var originalBitmap: Bitmap
+
     private lateinit var filterList: RecyclerView
     private lateinit var seekBar: SeekBar
 
@@ -78,7 +84,6 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
             setDisplayHomeAsUpEnabled(false)
             setDisplayShowHomeEnabled(false)
         }
-        seekBar.max = 20;
     }
 
     private fun openCvInit() {
@@ -98,6 +103,7 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
             when (requestCode) {
                 0 -> if (resultCode == Activity.RESULT_OK && intent != null) {
                     val selectedImage = data.get("data") as Bitmap
+                    originalBitmap = selectedImage
                     bitmap = selectedImage
                     imageView.setImageBitmap(selectedImage)
                 }
@@ -113,6 +119,7 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
 
                         val columnIndex = cursor.getColumnIndex(filePathColumn[0])
                         val picturePath = cursor.getString(columnIndex)
+                        originalBitmap = BitmapFactory.decodeFile(picturePath)
                         bitmap = BitmapFactory.decodeFile(picturePath)
                         imageView.setImageBitmap(bitmap)
                         cursor.close()
@@ -127,8 +134,8 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
         const val INTENT_EXTRAS: String = "INTENT_EXTRAS"
         const val REQUEST_CODE: String = "REQUEST_CODE"
         const val RESULT_CODE: String = "RESULT_CODE"
-        val FILTERS_ARRAY: List<String> = listOf("Brightness", "Contrast", "Another filter")
-        val FILTERS_SLIDER_ARRAY: List<String> = listOf("Brightness", "Contrast")
+        val FILTERS_ARRAY: List<String> = listOf("Brightness", "Contrast", "Binarizing","Blur","Median")
+        val FILTERS_SLIDER_ARRAY: List<String> = listOf("Brightness", "Contrast","Binarizing","Blur","Median")
     }
 
     override fun onClick(v: View?) {
@@ -153,11 +160,28 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
             seekBar.setOnSeekBarChangeListener(this)
             when (FILTERS_SLIDER_ARRAY.indexOf(selectedFilter)) {
                 0 -> {
+                    seekBar.max=100
                     seekBar.progress = prevBrightnessProgress
                     return
                 }
                 1 -> {
+                    seekBar.max=50
                     seekBar.progress = prevContrastProgress
+                    return
+                }
+                2 -> {
+                    seekBar.max=255
+                    seekBar.progress = prevBinarizingProgress
+                    return
+                }
+                3 -> {
+                    seekBar.max=500
+                    seekBar.progress = prevBlurProgress
+                    return
+                }
+                4 -> {
+                    seekBar.max=255
+                    seekBar.progress = prevMedianBlurProgress
                     return
                 }
                 else -> return
@@ -177,8 +201,10 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
             0 -> {
                 val diff = progress - prevBrightnessProgress
                 if (diff > 0) {
+                    bitmap=originalBitmap
                     presenter.increaseBrightness(bitmap, progress)
                 } else {
+                    bitmap=originalBitmap
                     presenter.decreaseBrightness(bitmap, progress)
                 }
                 prevBrightnessProgress = progress
@@ -187,11 +213,34 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
             1 -> {
                 val diff = progress - prevContrastProgress
                 if (diff > 0) {
+                    bitmap=originalBitmap
                     presenter.increaseContrast(bitmap, progress)
                 } else {
+                    bitmap=originalBitmap
                     presenter.decreaseContrast(bitmap, progress)
                 }
                 prevContrastProgress = progress
+                return
+            }
+            2 -> {
+                if(progress>=50) {
+                    bitmap = originalBitmap
+                    presenter.toBinary(bitmap, progress)
+                }
+                prevBinarizingProgress = progress
+                return
+            }
+            3 -> {
+                    bitmap = originalBitmap
+                    presenter.blur(bitmap,progress)
+                    prevBlurProgress = progress
+                return
+            }
+            4 -> {
+                bitmap = originalBitmap
+               // presenter.medianBlur(bitmap,progress)
+                presenter.Convolution2d(bitmap,progress)
+                prevMedianBlurProgress = progress
                 return
             }
             else -> return

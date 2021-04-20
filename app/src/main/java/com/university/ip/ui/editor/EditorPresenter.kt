@@ -28,6 +28,31 @@ class EditorPresenter : BasePresenter<EditorContract.View>(), EditorContract.Pre
         getView()?.setBitmap(result)
     }
 
+    override fun toGray(bitmap: Bitmap, value: Int) {
+        val result = operators.toGray(bitmap, value)
+        getView()?.setBitmap(result)
+    }
 
+   override fun toBinary(bitmap: Bitmap,threshold: Int) {
+       val result = operators.toBinary(bitmap,threshold)
+       if (result != null) {
+           getView()?.setBitmap(result)
+       }
+   }
+
+    override fun blur(bitmap: Bitmap, value: Int) {
+        val result = operators.blur(bitmap, value)
+        getView()?.setBitmap(result)
+    }
+
+    override fun medianBlur(bitmap: Bitmap, value: Int) {
+        val result = operators.medianBlur(bitmap, value)
+        getView()?.setBitmap(result)
+    }
+
+    override fun Convolution2d(bitmap: Bitmap, value: Int) {
+        val result = operators.Convolution2d(bitmap, value)
+        getView()?.setBitmap(result)
+    }
 
 }

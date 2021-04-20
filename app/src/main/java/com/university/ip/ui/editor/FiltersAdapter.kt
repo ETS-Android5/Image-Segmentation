@@ -1,6 +1,7 @@
 package com.university.ip.ui.editor
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,7 @@ class FiltersAdapter(context: Context, val itemClickListener: ItemClickListener)
     fun getList(): List<String> {
         return list
     }
+
 
     fun setMediaList(list: List<String>) {
         this.list = list
@@ -51,12 +53,15 @@ class FiltersAdapter(context: Context, val itemClickListener: ItemClickListener)
 
             textView.setOnClickListener {
                 selectMedia(item, adapterPosition)
+                textView.setTextColor(Color.parseColor("#FF0000"))
                 itemClickListener.onItemClick(item)
             }
         }
     }
 
     interface ItemClickListener {
-        fun onItemClick(filter: String)
+        fun onItemClick(filter: String){
+
+        }
     }
 }
