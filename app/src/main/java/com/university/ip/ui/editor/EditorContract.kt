@@ -31,5 +31,7 @@ interface EditorContract {
         fun Convolution2d(bitmap: Bitmap, value: Int)
 
         fun unsharpMask(bitmap: Bitmap, value: Int)
+
+        fun flip(bitmap: Bitmap)
     }
 }

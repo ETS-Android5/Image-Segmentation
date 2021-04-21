@@ -19,6 +19,7 @@ import com.university.ip.R
 import com.university.ip.ui.main.MainActivity
 import com.university.ip.util.files.FileSaver.Companion.IMAGE_MIME_TYPE
 import com.university.ip.util.files.FileSaverLegacy
+import kotlinx.android.synthetic.main.activity_editor.*
 import kotlinx.android.synthetic.main.photos_display_item.*
 import org.opencv.android.OpenCVLoader
 
@@ -86,6 +87,50 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
             setDisplayHomeAsUpEnabled(false)
             setDisplayShowHomeEnabled(false)
         }
+
+        // onTouch listener function when the image is clicked
+        imageView.setOnTouchListener { v, m -> // Perform tasks here
+            zoom_controls.show()
+            false
+        }
+
+        btn_flip.setOnClickListener({
+            presenter.flip(bitmap)
+        })
+
+        // This function will be automatically called out,when
+        // zoom in button is being pressed
+        zoom_controls.setOnZoomInClickListener(
+                View.OnClickListener {
+                    val x: Float = imageView.getScaleX()
+                    val y: Float = imageView.getScaleY()
+
+                    // setting the new scale
+                    imageView.scaleX = (x + 0.5f) as Float
+                    imageView.scaleY = (y + 0.5f) as Float
+                    zoom_controls.hide()
+                }
+        )
+
+        // This function will be called when
+        // zoom out button is pressed
+        zoom_controls.setOnZoomOutClickListener(
+                View.OnClickListener {
+                    val x: Float = imageView.getScaleX()
+                    val y: Float = imageView.getScaleY()
+                    if (x == 1f && y == 1f) {
+                        imageView.setScaleX(x as Float)
+                        imageView.setScaleY(y as Float)
+                        zoom_controls.hide()
+                    } else {
+                        // setting the new scale
+                        imageView.setScaleX((x - 0.5f) as Float)
+                        imageView.setScaleY((y - 0.5f) as Float)
+                        // hiding the zoom controls
+                        zoom_controls.hide()
+                    }
+                }
+        )
     }
 
     private fun openCvInit() {

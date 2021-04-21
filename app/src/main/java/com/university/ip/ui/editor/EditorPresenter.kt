@@ -60,4 +60,9 @@ class EditorPresenter : BasePresenter<EditorContract.View>(), EditorContract.Pre
         getView()?.setBitmap(result)
     }
 
+    override fun flip(bitmap: Bitmap) {
+        val result = operators.flip(bitmap)
+        getView()?.setBitmap(result)
+    }
+
 }

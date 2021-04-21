@@ -3,6 +3,7 @@ package com.university.ip.repository
 import android.graphics.Bitmap
 import org.opencv.android.Utils
 import org.opencv.core.*
+import org.opencv.core.Core.flip
 import org.opencv.imgproc.Imgproc
 
 
@@ -114,6 +115,17 @@ class Operators {
         } else{
             Imgproc.Laplacian(gray, dst, CvType.CV_8UC1,value, 1.0, 0.0,Core.BORDER_DEFAULT)
         }
+        val result = Bitmap.createBitmap(src.cols(), src.rows(), Bitmap.Config.ARGB_8888)
+        Utils.matToBitmap(dst, result)
+        return result
+
+    }
+
+    fun flip(bitmap: Bitmap): Bitmap {
+        val src = Mat(bitmap.height, bitmap.width, CvType.CV_8UC1)
+        Utils.bitmapToMat(bitmap, src)
+        val dst= Mat(src.cols(), src.rows(), src.type())
+        Core.flip(src, dst, -1);
         val result = Bitmap.createBitmap(src.cols(), src.rows(), Bitmap.Config.ARGB_8888)
         Utils.matToBitmap(dst, result)
         return result
