@@ -33,5 +33,9 @@ interface EditorContract {
         fun unsharpMask(bitmap: Bitmap, value: Int)
 
         fun flip(bitmap: Bitmap)
+
+        fun rotate90ClockWise(bitmap: Bitmap)
+
+        fun rotate90CounterClockWise(bitmap: Bitmap)
     }
 }

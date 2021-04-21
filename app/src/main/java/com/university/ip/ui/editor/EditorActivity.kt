@@ -98,6 +98,14 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
             presenter.flip(bitmap)
         })
 
+        rotate_left.setOnClickListener({
+            presenter.rotate90ClockWise(bitmap)
+        })
+
+        rotate_right.setOnClickListener({
+            presenter.rotate90CounterClockWise(bitmap)
+        })
+
         // This function will be automatically called out,when
         // zoom in button is being pressed
         zoom_controls.setOnZoomInClickListener(

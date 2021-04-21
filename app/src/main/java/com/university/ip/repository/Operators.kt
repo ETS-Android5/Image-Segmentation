@@ -3,7 +3,7 @@ package com.university.ip.repository
 import android.graphics.Bitmap
 import org.opencv.android.Utils
 import org.opencv.core.*
-import org.opencv.core.Core.flip
+import org.opencv.core.Core.*
 import org.opencv.imgproc.Imgproc
 
 
@@ -129,6 +129,26 @@ class Operators {
         val result = Bitmap.createBitmap(src.cols(), src.rows(), Bitmap.Config.ARGB_8888)
         Utils.matToBitmap(dst, result)
         return result
+    }
 
+    fun rotate90ClockWise(bitmap: Bitmap): Bitmap {
+        val src = Mat(bitmap.height, bitmap.width, CvType.CV_8UC1)
+        Utils.bitmapToMat(bitmap, src)
+        val dst= Mat(src.cols(), src.rows(), src.type())
+        Core.transpose(src,dst)
+        Core.flip(dst, dst, ROTATE_90_CLOCKWISE);
+        val result = Bitmap.createBitmap(dst.cols(), dst.rows(), Bitmap.Config.ARGB_8888)
+        Utils.matToBitmap(dst, result)
+        return result
+    }
+    fun rotate90CounterClockWise(bitmap: Bitmap): Bitmap {
+        val src = Mat(bitmap.height, bitmap.width, CvType.CV_8UC1)
+        Utils.bitmapToMat(bitmap, src)
+        val dst= Mat(src.cols(), src.rows(), src.type())
+        Core.transpose(src,dst)
+        Core.flip(dst, dst, ROTATE_90_COUNTERCLOCKWISE);
+        val result = Bitmap.createBitmap(dst.cols(), dst.rows(), Bitmap.Config.ARGB_8888)
+        Utils.matToBitmap(dst, result)
+        return result
     }
 }
