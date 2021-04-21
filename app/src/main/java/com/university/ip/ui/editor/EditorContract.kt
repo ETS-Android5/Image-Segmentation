@@ -29,5 +29,7 @@ interface EditorContract {
         fun medianBlur(bitmap: Bitmap, value: Int)
 
         fun Convolution2d(bitmap: Bitmap, value: Int)
+
+        fun unsharpMask(bitmap: Bitmap, value: Int)
     }
 }

@@ -32,6 +32,8 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
     var prevBinarizingProgress = 0
     var prevBlurProgress = 0
     var prevMedianBlurProgress = 0
+    var prev2dConvProgress = 0
+    var prevSharpenProgress = 0
     private lateinit var backButton: ImageView
     private lateinit var saveButton: TextView
     private lateinit var imageView: ImageView
@@ -134,8 +136,8 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
         const val INTENT_EXTRAS: String = "INTENT_EXTRAS"
         const val REQUEST_CODE: String = "REQUEST_CODE"
         const val RESULT_CODE: String = "RESULT_CODE"
-        val FILTERS_ARRAY: List<String> = listOf("Brightness", "Contrast", "Binarizing","Blur","Median")
-        val FILTERS_SLIDER_ARRAY: List<String> = listOf("Brightness", "Contrast","Binarizing","Blur","Median")
+        val FILTERS_ARRAY: List<String> = listOf("Brightness", "Contrast", "Binarizing","Blur","Median","2D Convolution","Sharpen")
+        val FILTERS_SLIDER_ARRAY: List<String> = listOf("Brightness", "Contrast","Binarizing","Blur","Median","2D Convolution","Sharpen")
     }
 
     override fun onClick(v: View?) {
@@ -184,10 +186,18 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
                     seekBar.progress = prevMedianBlurProgress
                     return
                 }
+                5 -> {
+                   seekBar.max=10
+                   seekBar.progress = prev2dConvProgress
+                   return
+                }
+                6 -> {
+                    seekBar.max=31
+                    seekBar.progress = prevSharpenProgress
+                    return
+                }
                 else -> return
             }
-
-
         } else {
             seekBar.visibility = View.GONE
         }
@@ -238,9 +248,20 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
             }
             4 -> {
                 bitmap = originalBitmap
-               // presenter.medianBlur(bitmap,progress)
-                presenter.Convolution2d(bitmap,progress)
+                presenter.medianBlur(bitmap,progress)
                 prevMedianBlurProgress = progress
+                return
+            }
+            5 -> {
+                bitmap = originalBitmap
+                presenter.Convolution2d(bitmap,progress)
+                prev2dConvProgress = progress
+                return
+            }
+            6 -> {
+                bitmap = originalBitmap
+                presenter.unsharpMask(bitmap,progress)
+                prevSharpenProgress = progress
                 return
             }
             else -> return

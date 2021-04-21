@@ -3,7 +3,6 @@ package com.university.ip.repository
 import android.graphics.Bitmap
 import org.opencv.android.Utils
 import org.opencv.core.*
-import org.opencv.core.Core.BORDER_DEFAULT
 import org.opencv.imgproc.Imgproc
 
 
@@ -37,26 +36,6 @@ class Operators {
     }
 
     fun toBinary(bmpOriginal: Bitmap, threshold: Int): Bitmap? {
-        /*val height: Int = bmpOriginal.height
-        val width: Int = bmpOriginal.width
-        val threshold: Int = 127
-        val bmpBinary = Bitmap.createBitmap(bmpOriginal)
-        for (x in 0 until width) {
-            for (y in 0 until height) {
-                // get one pixel color
-                val pixel = bmpOriginal.getPixel(x, y)
-                val red: Int = Color.red(pixel)
-
-                //get binary value
-                if (red < threshold) {
-                    bmpBinary.setPixel(x, y, -0x1000000)
-                } else {
-                    bmpBinary.setPixel(x, y, -0x1)
-                }
-            }
-        }
-        return bmpBinary*/
-
         val imageMat = Mat()
         Utils.bitmapToMat(bmpOriginal, imageMat)
         Imgproc.cvtColor(imageMat, imageMat, Imgproc.COLOR_BGR2GRAY)
@@ -95,9 +74,9 @@ class Operators {
         val src = Mat(bitmap.height, bitmap.width, CvType.CV_8UC1)
         Utils.bitmapToMat(bitmap, src)
         val dst = Mat(src.cols(), src.rows(), src.type())
-        val M  = Mat.eye(3, 3, CvType.CV_32FC1)
+        val M  = Mat.eye(value, value, CvType.CV_32FC1)
         val anchor = Point((-1).toDouble(), (-1).toDouble())
-        Imgproc.filter2D(src, dst, CvType.CV_8UC1,M ,anchor, 0.0, Core.BORDER_DEFAULT)
+        Imgproc.filter2D(src, dst, CvType.CV_8UC1, M, anchor, 0.0, Core.BORDER_DEFAULT)
         val result = Bitmap.createBitmap(src.cols(), src.rows(), Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(dst, result)
         return result
@@ -120,5 +99,24 @@ class Operators {
         val result = Bitmap.createBitmap(src.cols(), src.rows(), Bitmap.Config.ARGB_8888)
         Utils.matToBitmap(src, result)
         return result
+    }
+
+    fun unsharpMask(bitmap: Bitmap, value: Int): Bitmap {
+        val src = Mat(bitmap.height, bitmap.width, CvType.CV_8UC1)
+        Utils.bitmapToMat(bitmap, src)
+        val dst= Mat(src.cols(), src.rows(), src.type())
+        val gray = Mat(src.cols(), src.rows(), src.type())
+        Imgproc.GaussianBlur( src, src, Size(3.0, 3.0), 0.0, 0.0, Core.BORDER_DEFAULT );
+        Imgproc.cvtColor(src,gray,Imgproc.COLOR_RGB2GRAY);
+        /// Apply Laplace function
+        if (value % 2 ==0){
+            Imgproc.Laplacian(gray, dst, CvType.CV_8UC1,value+1, 1.0, 0.0,Core.BORDER_DEFAULT)
+        } else{
+            Imgproc.Laplacian(gray, dst, CvType.CV_8UC1,value, 1.0, 0.0,Core.BORDER_DEFAULT)
+        }
+        val result = Bitmap.createBitmap(src.cols(), src.rows(), Bitmap.Config.ARGB_8888)
+        Utils.matToBitmap(dst, result)
+        return result
+
     }
 }

@@ -55,4 +55,9 @@ class EditorPresenter : BasePresenter<EditorContract.View>(), EditorContract.Pre
         getView()?.setBitmap(result)
     }
 
+    override fun unsharpMask(bitmap: Bitmap, value: Int) {
+        val result = operators.unsharpMask(bitmap, value)
+        getView()?.setBitmap(result)
+    }
+
 }
