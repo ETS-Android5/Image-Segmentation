@@ -20,9 +20,11 @@ interface EditorContract {
 
         fun decreaseContrast(bitmap: Bitmap, value: Int)
 
-        fun toGray(bitmap: Bitmap, value: Int)
+        fun toGray(bitmap: Bitmap)
 
         fun toBinary(bitmap: Bitmap,threshold: Int)
+
+        fun toAdaptiveBinary(bitmap: Bitmap,threshold: Int)
 
         fun blur(bitmap: Bitmap, value: Int)
 
@@ -37,5 +39,9 @@ interface EditorContract {
         fun rotate90ClockWise(bitmap: Bitmap)
 
         fun rotate90CounterClockWise(bitmap: Bitmap)
+
+        fun sobel(bitmap: Bitmap,value:Int)
+
+        fun modifyRGBContrast(bitmap: Bitmap, red: Double, green: Double, blue: Double)
     }
 }

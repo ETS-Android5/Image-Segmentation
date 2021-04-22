@@ -28,13 +28,14 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
 
     override fun appContext(): Context = applicationContext
     private val TAG = "EditorActivity"
-    var prevBrightnessProgress = 0
+    var prevBrightnessProgress = 1
     var prevContrastProgress = 0
     var prevBinarizingProgress = 0
     var prevBlurProgress = 0
     var prevMedianBlurProgress = 0
     var prev2dConvProgress = 0
     var prevSharpenProgress = 0
+    var prevGrayProgress = 0
     private lateinit var backButton: ImageView
     private lateinit var saveButton: TextView
     private lateinit var imageView: ImageView
@@ -189,8 +190,8 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
         const val INTENT_EXTRAS: String = "INTENT_EXTRAS"
         const val REQUEST_CODE: String = "REQUEST_CODE"
         const val RESULT_CODE: String = "RESULT_CODE"
-        val FILTERS_ARRAY: List<String> = listOf("Brightness", "Contrast", "Binarizing","Blur","Median","2D Convolution","Sharpen")
-        val FILTERS_SLIDER_ARRAY: List<String> = listOf("Brightness", "Contrast","Binarizing","Blur","Median","2D Convolution","Sharpen")
+        val FILTERS_ARRAY: List<String> = listOf("Brightness", "Contrast", "Binarizing","Blur","Median","2D Convolution","Sharpen","Gray","Adaptive Binary")
+        val FILTERS_SLIDER_ARRAY: List<String> = listOf("Brightness", "Contrast","Binarizing","Blur","Median","2D Convolution","Sharpen","Gray","Adaptive Binary")
     }
 
     override fun onClick(v: View?) {
@@ -216,37 +217,39 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
             when (FILTERS_SLIDER_ARRAY.indexOf(selectedFilter)) {
                 0 -> {
                     seekBar.max=100
-                    seekBar.progress = prevBrightnessProgress
                     return
                 }
                 1 -> {
-                    seekBar.max=50
-                    seekBar.progress = prevContrastProgress
+                    seekBar.max=25
                     return
                 }
                 2 -> {
                     seekBar.max=255
-                    seekBar.progress = prevBinarizingProgress
+
                     return
                 }
                 3 -> {
                     seekBar.max=500
-                    seekBar.progress = prevBlurProgress
                     return
                 }
                 4 -> {
                     seekBar.max=255
-                    seekBar.progress = prevMedianBlurProgress
                     return
                 }
                 5 -> {
                    seekBar.max=10
-                   seekBar.progress = prev2dConvProgress
                    return
                 }
                 6 -> {
-                    seekBar.max=31
-                    seekBar.progress = prevSharpenProgress
+                    seekBar.max=60
+                    return
+                }
+                7 -> {
+                    seekBar.max=2
+                    return
+                }
+                8 -> {
+                    seekBar.max=255
                     return
                 }
                 else -> return
@@ -262,59 +265,80 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
         println(selectedFilter)
         when (FILTERS_SLIDER_ARRAY.indexOf(selectedFilter)) {
             0 -> {
-                val diff = progress - prevBrightnessProgress
-                if (diff > 0) {
-                    bitmap=originalBitmap
+                   // seekBar.progress = prevBrightnessProgress
+                    presenter.decreaseBrightness(bitmap, prevBrightnessProgress)
                     presenter.increaseBrightness(bitmap, progress)
-                } else {
-                    bitmap=originalBitmap
-                    presenter.decreaseBrightness(bitmap, progress)
-                }
-                prevBrightnessProgress = progress
+                    prevBrightnessProgress = progress
                 return
             }
             1 -> {
-                val diff = progress - prevContrastProgress
-                if (diff > 0) {
-                    bitmap=originalBitmap
-                    presenter.increaseContrast(bitmap, progress)
-                } else {
-                    bitmap=originalBitmap
+                    seekBar.progress = prevContrastProgress
                     presenter.decreaseContrast(bitmap, progress)
-                }
-                prevContrastProgress = progress
+                    presenter.increaseContrast(bitmap, progress)
+                    prevContrastProgress = progress
                 return
             }
             2 -> {
-                if(progress>=50) {
+                seekBar.progress = prevBinarizingProgress
+                if(progress>=20) {
                     bitmap = originalBitmap
                     presenter.toBinary(bitmap, progress)
+                } else {
+                    bitmap = originalBitmap
+                    setBitmap(bitmap)
                 }
                 prevBinarizingProgress = progress
                 return
             }
             3 -> {
+                    seekBar.progress = prevBlurProgress
                     bitmap = originalBitmap
                     presenter.blur(bitmap,progress)
                     prevBlurProgress = progress
                 return
             }
             4 -> {
+                seekBar.progress = prevMedianBlurProgress
                 bitmap = originalBitmap
                 presenter.medianBlur(bitmap,progress)
                 prevMedianBlurProgress = progress
                 return
             }
             5 -> {
+                seekBar.progress = prev2dConvProgress
                 bitmap = originalBitmap
                 presenter.Convolution2d(bitmap,progress)
                 prev2dConvProgress = progress
                 return
             }
             6 -> {
+                seekBar.progress = prevSharpenProgress
                 bitmap = originalBitmap
                 presenter.unsharpMask(bitmap,progress)
                 prevSharpenProgress = progress
+                return
+            }
+            7 -> {
+                seekBar.progress = prevGrayProgress
+                bitmap = originalBitmap
+                if(progress<2){
+                    setBitmap(bitmap)
+                } else {
+                    presenter.toGray(bitmap)
+                }
+                prevSharpenProgress = progress
+                return
+            }
+            8 -> {
+                seekBar.progress = prevBinarizingProgress
+                if(progress>=20) {
+                    bitmap = originalBitmap
+                    presenter.toAdaptiveBinary(bitmap, progress)
+                } else {
+                    bitmap = originalBitmap
+                    setBitmap(bitmap)
+                }
+                prevBinarizingProgress = progress
                 return
             }
             else -> return

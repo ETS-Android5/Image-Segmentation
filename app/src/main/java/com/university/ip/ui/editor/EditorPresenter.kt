@@ -28,8 +28,8 @@ class EditorPresenter : BasePresenter<EditorContract.View>(), EditorContract.Pre
         getView()?.setBitmap(result)
     }
 
-    override fun toGray(bitmap: Bitmap, value: Int) {
-        val result = operators.toGray(bitmap, value)
+    override fun toGray(bitmap: Bitmap) {
+        val result = operators.toGray(bitmap)
         getView()?.setBitmap(result)
     }
 
@@ -39,6 +39,14 @@ class EditorPresenter : BasePresenter<EditorContract.View>(), EditorContract.Pre
            getView()?.setBitmap(result)
        }
    }
+
+    override fun toAdaptiveBinary(bitmap: Bitmap,threshold: Int) {
+        val result = operators.toAdaptiveBinary(bitmap,threshold)
+        if (result != null) {
+            getView()?.setBitmap(result)
+        }
+    }
+
 
     override fun blur(bitmap: Bitmap, value: Int) {
         val result = operators.blur(bitmap, value)
@@ -75,5 +83,14 @@ class EditorPresenter : BasePresenter<EditorContract.View>(), EditorContract.Pre
         getView()?.setBitmap(result)
     }
 
+    override fun sobel(bitmap: Bitmap,value:Int) {
+        val result = operators.sobel(bitmap,value)
+        getView()?.setBitmap(result)
+    }
+
+    override fun modifyRGBContrast(bitmap: Bitmap, red: Double, green: Double, blue: Double) {
+        val result = operators.modifyRGBContrast(bitmap,red,green,blue)
+        getView()?.setBitmap(result)
+    }
 
 }
