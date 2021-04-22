@@ -20,7 +20,6 @@ import com.university.ip.ui.main.MainActivity
 import com.university.ip.util.files.FileSaver.Companion.IMAGE_MIME_TYPE
 import com.university.ip.util.files.FileSaverLegacy
 import kotlinx.android.synthetic.main.activity_editor.*
-import kotlinx.android.synthetic.main.photos_display_item.*
 import org.opencv.android.OpenCVLoader
 
 class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickListener,
@@ -29,13 +28,20 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
     override fun appContext(): Context = applicationContext
     private val TAG = "EditorActivity"
     var prevBrightnessProgress = 1
-    var prevContrastProgress = 0
-    var prevBinarizingProgress = 0
-    var prevBlurProgress = 0
-    var prevMedianBlurProgress = 0
-    var prev2dConvProgress = 0
-    var prevSharpenProgress = 0
-    var prevGrayProgress = 0
+    var prevContrastProgress = 1
+    var prevBinarizingProgress = 1
+    var prevBlurProgress = 1
+    var prevMedianBlurProgress = 1
+    var prev2dConvProgress = 1
+    var prevSharpenProgress = 1
+    var prevGrayProgress = 1
+    var prevBilateralProgress = 1
+    var prevRedCProgress = 1
+    var prevGreenCProgress = 1
+    var prevBlueCProgress = 1
+    var prevRedBProgress = 1
+    var prevGreenBProgress = 1
+    var prevBlueBProgress = 1
     private lateinit var backButton: ImageView
     private lateinit var saveButton: TextView
     private lateinit var imageView: ImageView
@@ -43,6 +49,8 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
 
     private lateinit var filterList: RecyclerView
     private lateinit var seekBar: SeekBar
+    private lateinit var seekBar1: SeekBar
+    private lateinit var seekBar2: SeekBar
 
     private lateinit var adapter: FiltersAdapter
 
@@ -69,6 +77,8 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
         filterList.adapter = adapter
 
         seekBar = findViewById(R.id.seek_bar_editor)
+        seekBar1 = findViewById(R.id.seek_bar_editor1)
+        seekBar2 = findViewById(R.id.seek_bar_editor2)
 
         backButton = findViewById(R.id.back_editor)
         backButton.setOnClickListener(this)
@@ -190,8 +200,8 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
         const val INTENT_EXTRAS: String = "INTENT_EXTRAS"
         const val REQUEST_CODE: String = "REQUEST_CODE"
         const val RESULT_CODE: String = "RESULT_CODE"
-        val FILTERS_ARRAY: List<String> = listOf("Brightness", "Contrast", "Binarizing","Blur","Median","2D Convolution","Sharpen","Gray","Adaptive Binary")
-        val FILTERS_SLIDER_ARRAY: List<String> = listOf("Brightness", "Contrast","Binarizing","Blur","Median","2D Convolution","Sharpen","Gray","Adaptive Binary")
+        val FILTERS_ARRAY: List<String> = listOf("Brightness", "Contrast", "Binarizing","Blur","Median","2D Convolution","Sharpen","Gray","Adaptive Binary","Bilateral","RGB Contrast","RGB Brightness")
+        val FILTERS_SLIDER_ARRAY: List<String> = listOf("Brightness", "Contrast","Binarizing","Blur","Median","2D Convolution","Sharpen","Gray","Adaptive Binary","Bilateral","RGB Contrast","RGB Brightness")
     }
 
     override fun onClick(v: View?) {
@@ -216,42 +226,87 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
             seekBar.setOnSeekBarChangeListener(this)
             when (FILTERS_SLIDER_ARRAY.indexOf(selectedFilter)) {
                 0 -> {
+                    seekBar1.visibility = View.GONE
+                    seekBar2.visibility = View.GONE
                     seekBar.max=100
                     return
                 }
                 1 -> {
+                    seekBar1.visibility = View.GONE
+                    seekBar2.visibility = View.GONE
                     seekBar.max=25
                     return
                 }
                 2 -> {
+                    seekBar1.visibility = View.GONE
+                    seekBar2.visibility = View.GONE
                     seekBar.max=255
 
                     return
                 }
                 3 -> {
+                    seekBar1.visibility = View.GONE
+                    seekBar2.visibility = View.GONE
                     seekBar.max=500
                     return
                 }
                 4 -> {
+                    seekBar1.visibility = View.GONE
+                    seekBar2.visibility = View.GONE
                     seekBar.max=255
                     return
                 }
                 5 -> {
-                   seekBar.max=10
+                    seekBar1.visibility = View.GONE
+                    seekBar2.visibility = View.GONE
+                   seekBar.max=31
                    return
                 }
                 6 -> {
+                    seekBar2.visibility = View.GONE
+                    seekBar1.visibility = View.GONE
                     seekBar.max=60
                     return
                 }
                 7 -> {
+                    seekBar1.visibility = View.GONE
+                    seekBar2.visibility = View.GONE
                     seekBar.max=2
                     return
                 }
                 8 -> {
+                    seekBar1.visibility = View.GONE
+                    seekBar2.visibility = View.GONE
                     seekBar.max=255
                     return
                 }
+                9 -> {
+                    seekBar1.visibility = View.GONE
+                    seekBar.max=25
+                    return
+                }
+                10 -> {
+                    seekBar1.visibility = View.VISIBLE
+                    seekBar1.setOnSeekBarChangeListener(this)
+                    seekBar2.visibility = View.VISIBLE
+                    seekBar2.setOnSeekBarChangeListener(this)
+                    seekBar.max=255
+                    seekBar1.max=255
+                    seekBar2.max=255
+                    return
+                }
+                11 -> {
+
+                    seekBar1.visibility = View.VISIBLE
+                    seekBar1.setOnSeekBarChangeListener(this)
+                    seekBar2.visibility = View.VISIBLE
+                    seekBar2.setOnSeekBarChangeListener(this)
+                    seekBar.max=255
+                    seekBar1.max=255
+                    seekBar2.max=255
+                    return
+                }
+
                 else -> return
             }
         } else {
@@ -260,26 +315,29 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
         println(FILTERS_SLIDER_ARRAY.indexOf(selectedFilter))
     }
 
-    override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+    override fun onProgressChanged(seekBarr: SeekBar, progress: Int, fromUser: Boolean) {
         println(progress)
         println(selectedFilter)
         when (FILTERS_SLIDER_ARRAY.indexOf(selectedFilter)) {
             0 -> {
-                   // seekBar.progress = prevBrightnessProgress
-                    presenter.decreaseBrightness(bitmap, prevBrightnessProgress)
+                    seekBarr.progress = prevBrightnessProgress
+                    bitmap = originalBitmap
+                  //  presenter.decreaseBrightness(bitmap, prevBrightnessProgress)
                     presenter.increaseBrightness(bitmap, progress)
                     prevBrightnessProgress = progress
                 return
             }
             1 -> {
-                    seekBar.progress = prevContrastProgress
-                    presenter.decreaseContrast(bitmap, progress)
-                    presenter.increaseContrast(bitmap, progress)
+                    seekBarr.progress = prevContrastProgress
+                    bitmap = originalBitmap
+                    //presenter.decreaseContrast(bitmap, progress)
+
+                    presenter.modifyRGBContrast(bitmap, 50.0,30.0,0.0)
                     prevContrastProgress = progress
                 return
             }
             2 -> {
-                seekBar.progress = prevBinarizingProgress
+                seekBarr.progress = prevBinarizingProgress
                 if(progress>=20) {
                     bitmap = originalBitmap
                     presenter.toBinary(bitmap, progress)
@@ -291,46 +349,46 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
                 return
             }
             3 -> {
-                    seekBar.progress = prevBlurProgress
+                    seekBarr.progress = prevBlurProgress
                     bitmap = originalBitmap
                     presenter.blur(bitmap,progress)
                     prevBlurProgress = progress
                 return
             }
             4 -> {
-                seekBar.progress = prevMedianBlurProgress
+                seekBarr.progress = prevMedianBlurProgress
                 bitmap = originalBitmap
                 presenter.medianBlur(bitmap,progress)
                 prevMedianBlurProgress = progress
                 return
             }
             5 -> {
-                seekBar.progress = prev2dConvProgress
+                seekBarr.progress = prev2dConvProgress
                 bitmap = originalBitmap
-                presenter.Convolution2d(bitmap,progress)
+                presenter.highPass(bitmap,progress)
                 prev2dConvProgress = progress
                 return
             }
             6 -> {
-                seekBar.progress = prevSharpenProgress
+                seekBarr.progress = prevSharpenProgress
                 bitmap = originalBitmap
                 presenter.unsharpMask(bitmap,progress)
                 prevSharpenProgress = progress
                 return
             }
             7 -> {
-                seekBar.progress = prevGrayProgress
+                seekBarr.progress = prevGrayProgress
                 bitmap = originalBitmap
                 if(progress<2){
                     setBitmap(bitmap)
                 } else {
                     presenter.toGray(bitmap)
                 }
-                prevSharpenProgress = progress
+                prevGrayProgress = progress
                 return
             }
             8 -> {
-                seekBar.progress = prevBinarizingProgress
+                seekBarr.progress = prevBinarizingProgress
                 if(progress>=20) {
                     bitmap = originalBitmap
                     presenter.toAdaptiveBinary(bitmap, progress)
@@ -341,6 +399,41 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
                 prevBinarizingProgress = progress
                 return
             }
+            9 -> {
+                seekBarr.progress = prevBilateralProgress
+                bitmap = originalBitmap
+                presenter.bilateralFilter(bitmap, progress)
+                prevBilateralProgress = progress
+                return
+            }
+            10 -> {
+                seekBar.progress = prevRedCProgress
+                seekBar1.progress = prevGreenCProgress
+                seekBar2.progress = prevBlueCProgress
+                bitmap = originalBitmap
+                presenter.modifyRGBContrast(bitmap, seekBar.progress.toDouble(),seekBar1.progress.toDouble(),seekBar2.progress.toDouble())
+                if(seekBarr == seekBar){
+                    prevRedCProgress = progress
+                } else  if(seekBarr == seekBar1){
+                    prevGreenCProgress = progress
+                } else prevBlueCProgress = progress
+                return
+            }
+
+            11 -> {
+                seekBar.progress = prevRedBProgress
+                seekBar1.progress = prevGreenBProgress
+                seekBar2.progress = prevBlueBProgress
+                bitmap = originalBitmap
+                presenter.modifyRGBContrast(bitmap, seekBar.progress.toDouble(),seekBar1.progress.toDouble(),seekBar2.progress.toDouble())
+                if(seekBarr == seekBar){
+                    prevRedBProgress = progress
+                } else  if(seekBarr == seekBar1){
+                    prevGreenBProgress = progress
+                } else prevBlueBProgress = progress
+                return
+            }
+
             else -> return
         }
 

@@ -26,11 +26,13 @@ interface EditorContract {
 
         fun toAdaptiveBinary(bitmap: Bitmap,threshold: Int)
 
+        fun bilateralFilter(bitmap: Bitmap,value: Int)
+
         fun blur(bitmap: Bitmap, value: Int)
 
         fun medianBlur(bitmap: Bitmap, value: Int)
 
-        fun Convolution2d(bitmap: Bitmap, value: Int)
+        fun highPass(bitmap: Bitmap, value: Int)
 
         fun unsharpMask(bitmap: Bitmap, value: Int)
 
@@ -43,5 +45,7 @@ interface EditorContract {
         fun sobel(bitmap: Bitmap,value:Int)
 
         fun modifyRGBContrast(bitmap: Bitmap, red: Double, green: Double, blue: Double)
+
+        fun modifyRGBBrightness(bitmap: Bitmap, red: Double, green: Double, blue: Double)
     }
 }

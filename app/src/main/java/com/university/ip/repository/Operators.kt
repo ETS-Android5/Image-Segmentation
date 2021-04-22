@@ -1,11 +1,12 @@
 package com.university.ip.repository
 
+import android.R.attr.src
 import android.graphics.Bitmap
 import org.opencv.android.Utils
 import org.opencv.core.*
 import org.opencv.core.Core.*
 import org.opencv.imgproc.Imgproc
-import org.opencv.imgproc.Imgproc.resize
+import org.opencv.imgproc.Imgproc.COLOR_BGR2GRAY
 
 
 class Operators {
@@ -51,9 +52,21 @@ class Operators {
         val imageMat = Mat(bmpOriginal.height, bmpOriginal.width, CvType.CV_8UC1)
         Utils.bitmapToMat(bmpOriginal, imageMat)
         Imgproc.cvtColor(imageMat, imageMat, Imgproc.COLOR_BGR2GRAY)
-        Imgproc.adaptiveThreshold(imageMat, imageMat, threshold.toDouble(), Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY,3, 2.0);
+        Imgproc.adaptiveThreshold(imageMat, imageMat, threshold.toDouble(), Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 3, 2.0);
         val result = Bitmap.createBitmap(imageMat.cols(), imageMat.rows(), Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(imageMat, result)
+        return result
+    }
+
+    fun bilateralFilter(bmpOriginal: Bitmap, value: Int): Bitmap? {
+        val imageMat = Mat(bmpOriginal.height, bmpOriginal.width, CvType.CV_8UC1)
+        Utils.bitmapToMat(bmpOriginal, imageMat)
+        Imgproc.cvtColor(imageMat, imageMat, Imgproc.COLOR_BGRA2BGR);
+        val dst :Mat= imageMat.clone();
+        Imgproc.bilateralFilter(imageMat, dst, value, 250.0, 50.0);
+        Imgproc.cvtColor(dst, dst, Imgproc.COLOR_RGB2RGBA);
+        val result = Bitmap.createBitmap(imageMat.cols(), imageMat.rows(), Bitmap.Config.ARGB_8888);
+        Utils.matToBitmap(dst, result)
         return result
     }
 
@@ -83,23 +96,20 @@ class Operators {
         return result
     }
 
-    fun Convolution2d(bitmap: Bitmap, value: Int): Bitmap {
+    fun highPass(bitmap: Bitmap, value: Int): Bitmap {
         val src = Mat(bitmap.height, bitmap.width, CvType.CV_8UC1)
         Utils.bitmapToMat(bitmap, src)
+        val gray = Mat(src.rows(), src.cols(), src.type())
         val dst = Mat(src.rows(), src.cols(), src.type())
-        val res = Mat(src.rows(), src.cols(), src.type())
-        val kernel  = Mat.eye(3, 3, CvType.CV_32FC1)
-        val anchor = Point((-1).toDouble(), (-1).toDouble())
-        val size = Size(3.0,3.0)
-        if (value % 2 ==0){
-            Imgproc.GaussianBlur(src,dst, Size(value.toDouble()+1, value.toDouble()+1), (value.toDouble()+1-1)/6, 0.0, Core.BORDER_DEFAULT);
-        } else{
-            Imgproc.GaussianBlur(src,dst, Size(value.toDouble(), value.toDouble()), (value.toDouble()-1)/6,(value.toDouble()-1)/6 , Core.BORDER_DEFAULT);
+        Imgproc.GaussianBlur(src, src, Size(3.0, 3.0), 0.0, 0.0, BORDER_DEFAULT)
+        Imgproc.cvtColor(src, gray, COLOR_BGR2GRAY) // Convert the image to grayscale
+        if (value % 2 ==0) {
+            Imgproc.Laplacian(gray, dst, CvType.CV_8UC1, value+1, 1.0, 0.0, BORDER_DEFAULT);
+        } else {
+            Imgproc.Laplacian(gray, dst, CvType.CV_8UC1, value, 1.0, 0.0, BORDER_DEFAULT);
         }
-     //   Imgproc.filter2D(src, dst, CvType.CV_8UC1, kernel, anchor, 0.0, Core.BORDER_DEFAULT)
-        Imgproc.Laplacian(dst,res,CvType.CV_8UC1,3,1.0,0.0,Core.BORDER_DEFAULT)
         val result = Bitmap.createBitmap(src.cols(), src.rows(), Bitmap.Config.ARGB_8888);
-        Utils.matToBitmap(res, result)
+        Utils.matToBitmap(dst, result)
         return result
     }
 
@@ -125,12 +135,12 @@ class Operators {
     fun unsharpMask(bitmap: Bitmap, value: Int): Bitmap {
         val src = Mat(bitmap.height, bitmap.width, CvType.CV_8UC1)
         Utils.bitmapToMat(bitmap, src)
-        val dst= Mat(src.rows(),src.cols(), src.type())
+        val dst= Mat(src.rows(), src.cols(), src.type())
 
         if (value % 2 ==0){
-            Imgproc.GaussianBlur(src,dst, Size(value.toDouble()+1, value.toDouble()+1), (value.toDouble()+1-1)/6, 0.0, Core.BORDER_DEFAULT);
+            Imgproc.GaussianBlur(src, dst, Size(value.toDouble() + 1, value.toDouble() + 1), (value.toDouble() + 1 - 1) / 6, 0.0, Core.BORDER_DEFAULT);
         } else{
-            Imgproc.GaussianBlur(src,dst, Size(value.toDouble(), value.toDouble()), (value.toDouble()-1)/6,(value.toDouble()-1)/6 , Core.BORDER_DEFAULT);
+            Imgproc.GaussianBlur(src, dst, Size(value.toDouble(), value.toDouble()), (value.toDouble() - 1) / 6, (value.toDouble() - 1) / 6, Core.BORDER_DEFAULT);
         }
 
         Core.addWeighted(src, 1.5, dst, -0.5, 0.0, dst)
@@ -156,11 +166,27 @@ class Operators {
         return result
     }
 
+    fun modifyRGBBrightness(bitmap: Bitmap, red: Double, green: Double, blue: Double): Bitmap {
+
+        val src = Mat(bitmap.getHeight(), bitmap.getWidth(), CvType.CV_8UC1)
+        Utils.bitmapToMat(bitmap, src)
+        val dst: ArrayList<Mat> = ArrayList(3)
+        Core.split(src, dst)
+
+        dst[0].convertTo(dst[0], -1, 0.0, red.toDouble())
+        dst[1].convertTo(dst[1], -1, 0.0, green.toDouble())
+        dst[2].convertTo(dst[2], -1, 0.0, blue.toDouble())
+        Core.merge(dst, src)
+        val result = Bitmap.createBitmap(src.cols(), src.rows(), Bitmap.Config.ARGB_8888)
+        Utils.matToBitmap(src, result)
+        return result
+    }
+
     fun sobel(bitmap: Bitmap, value: Int): Bitmap {
         val src = Mat(bitmap.height, bitmap.width, CvType.CV_8UC1)
         Utils.bitmapToMat(bitmap, src)
-        val dst= Mat(src.rows(),src.cols(), src.type())
-        Imgproc.Sobel(src,dst, CvType.CV_8UC1,0,1);
+        val dst= Mat(src.rows(), src.cols(), src.type())
+        Imgproc.Sobel(src, dst, CvType.CV_8UC1, 0, 1);
         /*if (value % 2 ==0){
             Imgproc.GaussianBlur(src,dst, Size(value.toDouble()+1, value.toDouble()+1), (value.toDouble()+1-1)/6, 0.0, Core.BORDER_DEFAULT);
         } else{

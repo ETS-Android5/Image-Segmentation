@@ -40,6 +40,13 @@ class EditorPresenter : BasePresenter<EditorContract.View>(), EditorContract.Pre
        }
    }
 
+    override fun bilateralFilter(bitmap: Bitmap,value:Int) {
+        val result = operators.bilateralFilter(bitmap,value)
+        if (result != null) {
+            getView()?.setBitmap(result)
+        }
+    }
+
     override fun toAdaptiveBinary(bitmap: Bitmap,threshold: Int) {
         val result = operators.toAdaptiveBinary(bitmap,threshold)
         if (result != null) {
@@ -58,8 +65,8 @@ class EditorPresenter : BasePresenter<EditorContract.View>(), EditorContract.Pre
         getView()?.setBitmap(result)
     }
 
-    override fun Convolution2d(bitmap: Bitmap, value: Int) {
-        val result = operators.Convolution2d(bitmap, value)
+    override fun highPass(bitmap: Bitmap, value: Int) {
+        val result = operators.highPass(bitmap, value)
         getView()?.setBitmap(result)
     }
 
@@ -90,6 +97,10 @@ class EditorPresenter : BasePresenter<EditorContract.View>(), EditorContract.Pre
 
     override fun modifyRGBContrast(bitmap: Bitmap, red: Double, green: Double, blue: Double) {
         val result = operators.modifyRGBContrast(bitmap,red,green,blue)
+        getView()?.setBitmap(result)
+    }
+    override fun modifyRGBBrightness(bitmap: Bitmap, red: Double, green: Double, blue: Double) {
+        val result = operators.modifyRGBBrightness(bitmap,red,green,blue)
         getView()?.setBitmap(result)
     }
 
