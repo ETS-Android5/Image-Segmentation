@@ -200,8 +200,8 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
         const val INTENT_EXTRAS: String = "INTENT_EXTRAS"
         const val REQUEST_CODE: String = "REQUEST_CODE"
         const val RESULT_CODE: String = "RESULT_CODE"
-        val FILTERS_ARRAY: List<String> = listOf("Brightness", "Contrast", "Binarizing","Blur","Median","2D Convolution","Sharpen","Gray","Adaptive Binary","Bilateral","RGB Contrast","RGB Brightness")
-        val FILTERS_SLIDER_ARRAY: List<String> = listOf("Brightness", "Contrast","Binarizing","Blur","Median","2D Convolution","Sharpen","Gray","Adaptive Binary","Bilateral","RGB Contrast","RGB Brightness")
+        val FILTERS_ARRAY: List<String> = listOf("Brightness", "Contrast", "Binarizing","Blur","Median","High Pass","Sharpen","Gray","Adaptive Binary","Bilateral","RGB Contrast","RGB Brightness","Zoom")
+        val FILTERS_SLIDER_ARRAY: List<String> = listOf("Brightness", "Contrast","Binarizing","Blur","Median","High Pass","Sharpen","Gray","Adaptive Binary","Bilateral","RGB Contrast","RGB Brightness","Zoom")
     }
 
     override fun onClick(v: View?) {
@@ -304,6 +304,12 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
                     seekBar.max=255
                     seekBar1.max=255
                     seekBar2.max=255
+                    return
+                }
+                12 -> {
+                    seekBar1.visibility = View.GONE
+                    seekBar2.visibility = View.GONE
+                    seekBar.max=100
                     return
                 }
 
@@ -431,6 +437,13 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
                 } else  if(seekBarr == seekBar1){
                     prevGreenBProgress = progress
                 } else prevBlueBProgress = progress
+                return
+            }
+            12 -> {
+                seekBarr.progress = prevSharpenProgress
+                bitmap = originalBitmap
+                presenter.zoomIn(bitmap,progress)
+                prevSharpenProgress = progress
                 return
             }
 

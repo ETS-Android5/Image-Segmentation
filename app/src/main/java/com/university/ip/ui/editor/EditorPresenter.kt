@@ -95,6 +95,11 @@ class EditorPresenter : BasePresenter<EditorContract.View>(), EditorContract.Pre
         getView()?.setBitmap(result)
     }
 
+    override fun zoomIn(bitmap: Bitmap, value: Int){
+        val result = operators.zoomIn(bitmap,value)
+        getView()?.setBitmap(result)
+    }
+
     override fun modifyRGBContrast(bitmap: Bitmap, red: Double, green: Double, blue: Double) {
         val result = operators.modifyRGBContrast(bitmap,red,green,blue)
         getView()?.setBitmap(result)

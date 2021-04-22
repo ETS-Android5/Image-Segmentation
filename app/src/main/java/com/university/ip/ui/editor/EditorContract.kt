@@ -47,5 +47,7 @@ interface EditorContract {
         fun modifyRGBContrast(bitmap: Bitmap, red: Double, green: Double, blue: Double)
 
         fun modifyRGBBrightness(bitmap: Bitmap, red: Double, green: Double, blue: Double)
+
+        fun zoomIn(bitmap: Bitmap, value: Int)
     }
 }

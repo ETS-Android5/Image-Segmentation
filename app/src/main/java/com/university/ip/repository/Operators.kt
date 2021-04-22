@@ -142,12 +142,23 @@ class Operators {
         } else{
             Imgproc.GaussianBlur(src, dst, Size(value.toDouble(), value.toDouble()), (value.toDouble() - 1) / 6, (value.toDouble() - 1) / 6, Core.BORDER_DEFAULT);
         }
-
         Core.addWeighted(src, 1.5, dst, -0.5, 0.0, dst)
         val result = Bitmap.createBitmap(dst.cols(), dst.rows(), Bitmap.Config.ARGB_8888)
         Utils.matToBitmap(dst, result)
         return result
+    }
 
+    fun zoomIn(bitmap: Bitmap, value: Int): Bitmap {
+        val src = Mat(bitmap.getHeight(), bitmap.getWidth(), CvType.CV_8UC1)
+        Utils.bitmapToMat(bitmap, src)
+
+        Imgproc.resize(src, src, Size((value*10 + src.cols()).toDouble(), (value*10 + src.rows()).toDouble()))
+        val roi = Rect(0, 0, bitmap.width, bitmap.height)
+        val cropped = Mat(src, roi)
+
+        val result = Bitmap.createBitmap(cropped.cols(), cropped.rows(), Bitmap.Config.ARGB_8888)
+        Utils.matToBitmap(cropped, result)
+        return result
     }
 
     fun modifyRGBContrast(bitmap: Bitmap, red: Double, green: Double, blue: Double): Bitmap {
