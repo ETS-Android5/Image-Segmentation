@@ -27,15 +27,7 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
 
     override fun appContext(): Context = applicationContext
     private val TAG = "EditorActivity"
-    var prevBrightnessProgress = 1
-    var prevContrastProgress = 1
-    var prevBinarizingProgress = 1
-    var prevBlurProgress = 1
-    var prevMedianBlurProgress = 1
-    var prev2dConvProgress = 1
-    var prevSharpenProgress = 1
-    var prevGrayProgress = 1
-    var prevBilateralProgress = 1
+    val previousProgresses = mutableMapOf("brightnes" to 1,"contrast" to 1,"median" to 1,"blur" to 1,"highpass" to 1,"sharpen" to 1,"gray" to 1,"adthreshold" to 1,"threshold" to 1,"bilateral" to 1,"zoom" to 1)
     var prevRedCProgress = 1
     var prevGreenCProgress = 1
     var prevBlueCProgress = 1
@@ -200,8 +192,8 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
         const val INTENT_EXTRAS: String = "INTENT_EXTRAS"
         const val REQUEST_CODE: String = "REQUEST_CODE"
         const val RESULT_CODE: String = "RESULT_CODE"
-        val FILTERS_ARRAY: List<String> = listOf("Brightness", "Contrast", "Binarizing","Blur","Median","High Pass","Sharpen","Gray","Adaptive Binary","Bilateral","RGB Contrast","RGB Brightness","Zoom")
-        val FILTERS_SLIDER_ARRAY: List<String> = listOf("Brightness", "Contrast","Binarizing","Blur","Median","High Pass","Sharpen","Gray","Adaptive Binary","Bilateral","RGB Contrast","RGB Brightness","Zoom")
+        val FILTERS_ARRAY: List<String> = listOf("Brightness", "Contrast", "Threshold","Blur","Median Blur","High Pass","Sharpen","Gray","Adaptive Threshold","Bilateral","RGB Contrast","RGB Brightness","Zoom")
+        val FILTERS_SLIDER_ARRAY: List<String> = listOf("Brightness", "Contrast","Threshold","Blur","Median Blur","High Pass","Sharpen","Gray","Adaptive Threshold","Bilateral","RGB Contrast","RGB Brightness","Zoom")
     }
 
     override fun onClick(v: View?) {
@@ -326,24 +318,23 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
         println(selectedFilter)
         when (FILTERS_SLIDER_ARRAY.indexOf(selectedFilter)) {
             0 -> {
-                    seekBarr.progress = prevBrightnessProgress
+                    seekBarr.progress = previousProgresses["brightnes"]!!
                     bitmap = originalBitmap
                   //  presenter.decreaseBrightness(bitmap, prevBrightnessProgress)
                     presenter.increaseBrightness(bitmap, progress)
-                    prevBrightnessProgress = progress
+                previousProgresses["brightnes"] = progress
                 return
             }
             1 -> {
-                    seekBarr.progress = prevContrastProgress
+                    seekBarr.progress = previousProgresses["contrast"]!!
                     bitmap = originalBitmap
                     //presenter.decreaseContrast(bitmap, progress)
-
                     presenter.modifyRGBContrast(bitmap, 50.0,30.0,0.0)
-                    prevContrastProgress = progress
+                previousProgresses["contrast"] = progress
                 return
             }
             2 -> {
-                seekBarr.progress = prevBinarizingProgress
+                seekBarr.progress = previousProgresses["threshold"]!!
                 if(progress>=20) {
                     bitmap = originalBitmap
                     presenter.toBinary(bitmap, progress)
@@ -351,50 +342,50 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
                     bitmap = originalBitmap
                     setBitmap(bitmap)
                 }
-                prevBinarizingProgress = progress
+                previousProgresses["threshold"]= progress
                 return
             }
             3 -> {
-                    seekBarr.progress = prevBlurProgress
+                    seekBarr.progress = previousProgresses["blur"]!!
                     bitmap = originalBitmap
                     presenter.blur(bitmap,progress)
-                    prevBlurProgress = progress
+                previousProgresses["blur"]= progress
                 return
             }
             4 -> {
-                seekBarr.progress = prevMedianBlurProgress
+                seekBarr.progress = previousProgresses["median"]!!
                 bitmap = originalBitmap
                 presenter.medianBlur(bitmap,progress)
-                prevMedianBlurProgress = progress
+                previousProgresses["median"]= progress
                 return
             }
             5 -> {
-                seekBarr.progress = prev2dConvProgress
+                seekBarr.progress = previousProgresses["highpass"]!!
                 bitmap = originalBitmap
                 presenter.highPass(bitmap,progress)
-                prev2dConvProgress = progress
+                previousProgresses["highpass"] = progress
                 return
             }
             6 -> {
-                seekBarr.progress = prevSharpenProgress
+                seekBarr.progress = previousProgresses["sharpen"]!!
                 bitmap = originalBitmap
                 presenter.unsharpMask(bitmap,progress)
-                prevSharpenProgress = progress
+                previousProgresses["sharpen"] = progress
                 return
             }
             7 -> {
-                seekBarr.progress = prevGrayProgress
+                seekBarr.progress = previousProgresses["gray"]!!
                 bitmap = originalBitmap
                 if(progress<2){
                     setBitmap(bitmap)
                 } else {
                     presenter.toGray(bitmap)
                 }
-                prevGrayProgress = progress
+                previousProgresses["gray"] = progress
                 return
             }
             8 -> {
-                seekBarr.progress = prevBinarizingProgress
+                seekBarr.progress = previousProgresses["adthreshold"]!!
                 if(progress>=20) {
                     bitmap = originalBitmap
                     presenter.toAdaptiveBinary(bitmap, progress)
@@ -402,14 +393,14 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
                     bitmap = originalBitmap
                     setBitmap(bitmap)
                 }
-                prevBinarizingProgress = progress
+                previousProgresses["adthreshold"]= progress
                 return
             }
             9 -> {
-                seekBarr.progress = prevBilateralProgress
+                seekBarr.progress = previousProgresses["bilateral"]!!
                 bitmap = originalBitmap
                 presenter.bilateralFilter(bitmap, progress)
-                prevBilateralProgress = progress
+                previousProgresses["bilateral"] = progress
                 return
             }
             10 -> {
@@ -440,10 +431,10 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
                 return
             }
             12 -> {
-                seekBarr.progress = prevSharpenProgress
+                seekBarr.progress = previousProgresses["zoom"]!!
                 bitmap = originalBitmap
                 presenter.zoomIn(bitmap,progress)
-                prevSharpenProgress = progress
+                previousProgresses["zoom"] = progress
                 return
             }
 
