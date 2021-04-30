@@ -16,10 +16,6 @@ interface EditorContract {
 
         fun increaseContrast(bitmap: Bitmap, value: Int)
 
-        fun decreaseBrightness(bitmap: Bitmap, value: Int)
-
-        fun decreaseContrast(bitmap: Bitmap, value: Int)
-
         fun toGray(bitmap: Bitmap)
 
         fun toBinary(bitmap: Bitmap,threshold: Int)

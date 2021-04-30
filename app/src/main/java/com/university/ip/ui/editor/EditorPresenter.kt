@@ -18,15 +18,6 @@ class EditorPresenter : BasePresenter<EditorContract.View>(), EditorContract.Pre
         getView()?.setBitmap(result)
     }
 
-    override fun decreaseBrightness(bitmap: Bitmap, value: Int) {
-        val result = operators.decreaseBrightness(bitmap, value)
-        getView()?.setBitmap(result)
-    }
-
-    override fun decreaseContrast(bitmap: Bitmap, value: Int) {
-        val result = operators.decreaseContrast(bitmap, value)
-        getView()?.setBitmap(result)
-    }
 
     override fun toGray(bitmap: Bitmap) {
         val result = operators.toGray(bitmap)

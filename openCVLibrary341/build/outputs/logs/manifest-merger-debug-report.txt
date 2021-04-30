@@ -1,37 +1,37 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:2:1-8:12
-INJECTED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:2:1-8:12
-INJECTED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:2:1-8:12
-INJECTED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:2:1-8:12
-INJECTED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:2:1-8:12
-INJECTED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:2:1-8:12
-INJECTED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:2:1-8:12
+ADDED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml:2:1-8:12
+INJECTED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml:2:1-8:12
+INJECTED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml:2:1-8:12
+INJECTED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml:2:1-8:12
+INJECTED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml:2:1-8:12
+INJECTED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml:2:1-8:12
+INJECTED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml:2:1-8:12
 	package
-		ADDED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:3:5-25
-		INJECTED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml
+		ADDED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml:3:5-25
+		INJECTED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml
+		INJECTED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml
 	android:versionName
-		ADDED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:5:5-32
-		INJECTED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml
+		ADDED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml:5:5-32
+		INJECTED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml
+		INJECTED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:2:11-69
+		ADDED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml:2:11-69
 	android:versionCode
-		ADDED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:4:5-31
-		INJECTED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml
+		ADDED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml:4:5-31
+		INJECTED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml
+		INJECTED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml
 uses-sdk
-ADDED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:7:5-17
-INJECTED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:7:5-17
-INJECTED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:7:5-17
-INJECTED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:7:5-17
-INJECTED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:7:5-17
+ADDED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml:7:5-17
+INJECTED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml:7:5-17
+INJECTED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml:7:5-17
+INJECTED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml:7:5-17
+INJECTED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml:7:5-17
 	android:targetSdkVersion
-		INJECTED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml
-		ADDED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:7:5-17
-		INJECTED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml
+		INJECTED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml
+		ADDED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml:7:5-17
+		INJECTED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml
-		ADDED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml:7:5-17
-		INJECTED from C:\Users\Szilvia\Desktop\UNI 2020-2021\Procesarea Imaginilor Digitale pe Dispozitive Mobile\ip-framework\openCVLibrary341\src\main\AndroidManifest.xml
+		INJECTED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml
+		ADDED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml:7:5-17
+		INJECTED from D:\UNI 2020-2021\Semestrul 2\PIDD - Procesarea Imaginilor Digitale pe Dispozitive Mobile\Image-Processing-Framework\openCVLibrary341\src\main\AndroidManifest.xml

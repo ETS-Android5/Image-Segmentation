@@ -47,7 +47,7 @@
         android:id="@+id/image_edited"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/filters_list"
+        app:layout_constraintBottom_toTopOf="@id/rotate_right"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_editor" />
@@ -58,12 +58,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="5dp"
+        android:background="#00BFFF"
+        android:layout_margin="1dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toTopOf="@+id/filters_list"
         app:layout_constraintEnd_toStartOf="@id/btn_flip"
-        app:layout_constraintTop_toBottomOf="@id/image_edited"
-        app:layout_constraintVertical_bias="0.847" />
+        app:layout_constraintTop_toBottomOf="@id/image_edited" />
 
     <Button
         android:id="@+id/btn_flip"
@@ -71,38 +71,38 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="5dp"
+        android:layout_margin="1dp"
+        android:background="#00BFFF"
         android:text="Flip"
         app:layout_constraintBottom_toTopOf="@+id/filters_list"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_edited"
-        app:layout_constraintVertical_bias="0.837" />
+        app:layout_constraintTop_toBottomOf="@id/image_edited"/>
     <Button
         android:id="@+id/rotate_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="3dp"
+        android:layout_margin="1dp"
+        android:background="#00BFFF"
         android:layout_marginBottom="479dp"
-        android:text="Right90"
+        android:text="Right"
         app:layout_constraintBottom_toTopOf="@+id/filters_list"
         app:layout_constraintEnd_toStartOf="@id/zoom_controls"
-        app:layout_constraintTop_toBottomOf="@id/image_edited"
-        app:layout_constraintVertical_bias="0.837" />
+        app:layout_constraintTop_toBottomOf="@id/image_edited" />
     <Button
         android:id="@+id/rotate_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="3dp"
-        android:layout_marginBottom="479dp"
-        android:text="Left90"
+        android:layout_margin="1dp"
+        android:layout_marginBottom="100dp"
+        android:background="#00BFFF"
+        android:text="Left"
         app:layout_constraintBottom_toTopOf="@+id/filters_list"
         app:layout_constraintEnd_toStartOf="@id/rotate_right"
-        app:layout_constraintTop_toBottomOf="@id/image_edited"
-        app:layout_constraintVertical_bias="0.837" />
+        app:layout_constraintTop_toBottomOf="@id/image_edited" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/filters_list"
@@ -120,7 +120,7 @@
         android:layout_height="wrap_content"
         android:max="50"
         android:min="1"
-        android:padding="20dp"
+        android:padding="5dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -132,8 +132,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:max="50"
+        android:background="#ADFF2F"
         android:min="1"
-        android:padding="20dp"
+        android:padding="5dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -144,13 +145,14 @@
         android:id="@+id/seek_bar_editor2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#0000FF"
         android:max="50"
         android:min="1"
-        android:padding="20dp"
+        android:padding="5dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/seek_bar_editor1" />
+        app:layout_constraintTop_toBottomOf="@id/rotate_right" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

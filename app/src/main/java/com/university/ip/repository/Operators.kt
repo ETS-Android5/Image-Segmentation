@@ -52,7 +52,12 @@ class Operators {
         val imageMat = Mat(bmpOriginal.height, bmpOriginal.width, CvType.CV_8UC1)
         Utils.bitmapToMat(bmpOriginal, imageMat)
         Imgproc.cvtColor(imageMat, imageMat, Imgproc.COLOR_BGR2GRAY)
-        Imgproc.adaptiveThreshold(imageMat, imageMat, threshold.toDouble(), Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 3, 2.0);
+        if(threshold%2==0){
+            Imgproc.adaptiveThreshold(imageMat, imageMat, 255.0, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, threshold+1, 2.0);
+        } else{
+            Imgproc.adaptiveThreshold(imageMat, imageMat, 255.0, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, threshold, 2.0);
+        }
+
         val result = Bitmap.createBitmap(imageMat.cols(), imageMat.rows(), Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(imageMat, result)
         return result
@@ -75,8 +80,8 @@ class Operators {
         Utils.bitmapToMat(bitmap, src)
         val dst = Mat(src.cols(), src.rows(), src.type())
         val size = Size(value.toDouble(), value.toDouble())
-        val point = Point(value.toDouble() / 2, value.toDouble() / 2)
-        Imgproc.blur(src, dst, size, point, Core.BORDER_DEFAULT)
+        val point = Point(-1.0, -1.0)
+        Imgproc.blur(src, dst, size, point, BORDER_DEFAULT)
         val result = Bitmap.createBitmap(src.cols(), src.rows(), Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(dst, result)
         return result
@@ -114,34 +119,17 @@ class Operators {
     }
 
 
-    fun decreaseBrightness(bitmap: Bitmap, value: Int): Bitmap {
-        val src = Mat(bitmap.height, bitmap.width, CvType.CV_8UC1)
-        Utils.bitmapToMat(bitmap, src)
-        src.convertTo(src, -1, 1.0, -value.toDouble())
-        val result = Bitmap.createBitmap(src.cols(), src.rows(), Bitmap.Config.ARGB_8888)
-        Utils.matToBitmap(src, result)
-        return result
-    }
-
-    fun decreaseContrast(bitmap: Bitmap, value: Int): Bitmap {
-        val src = Mat(bitmap.height, bitmap.width, CvType.CV_8UC1)
-        Utils.bitmapToMat(bitmap, src)
-        src.convertTo(src, -1, -value.toDouble(), 1.0)
-        val result = Bitmap.createBitmap(src.cols(), src.rows(), Bitmap.Config.ARGB_8888)
-        Utils.matToBitmap(src, result)
-        return result
-    }
-
     fun unsharpMask(bitmap: Bitmap, value: Int): Bitmap {
         val src = Mat(bitmap.height, bitmap.width, CvType.CV_8UC1)
         Utils.bitmapToMat(bitmap, src)
         val dst= Mat(src.rows(), src.cols(), src.type())
 
         if (value % 2 ==0){
-            Imgproc.GaussianBlur(src, dst, Size(value.toDouble() + 1, value.toDouble() + 1), (value.toDouble() + 1 - 1) / 6, 0.0, Core.BORDER_DEFAULT);
+            Imgproc.GaussianBlur(src, dst, Size(value.toDouble() + 1, value.toDouble() + 1), 0.0, 0.0, BORDER_DEFAULT);
         } else{
-            Imgproc.GaussianBlur(src, dst, Size(value.toDouble(), value.toDouble()), (value.toDouble() - 1) / 6, (value.toDouble() - 1) / 6, Core.BORDER_DEFAULT);
+            Imgproc.GaussianBlur(src, dst, Size(value.toDouble(), value.toDouble()), 0.0, 0.0, BORDER_DEFAULT);
         }
+
         Core.addWeighted(src, 1.5, dst, -0.5, 0.0, dst)
         val result = Bitmap.createBitmap(dst.cols(), dst.rows(), Bitmap.Config.ARGB_8888)
         Utils.matToBitmap(dst, result)

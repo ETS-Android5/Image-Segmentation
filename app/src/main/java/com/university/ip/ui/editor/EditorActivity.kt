@@ -328,7 +328,6 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
             0 -> {
                     seekBarr.progress = prevBrightnessProgress
                     bitmap = originalBitmap
-                  //  presenter.decreaseBrightness(bitmap, prevBrightnessProgress)
                     presenter.increaseBrightness(bitmap, progress)
                     prevBrightnessProgress = progress
                 return
@@ -336,9 +335,7 @@ class EditorActivity : AppCompatActivity(), EditorContract.View, View.OnClickLis
             1 -> {
                     seekBarr.progress = prevContrastProgress
                     bitmap = originalBitmap
-                    //presenter.decreaseContrast(bitmap, progress)
-
-                    presenter.modifyRGBContrast(bitmap, 50.0,30.0,0.0)
+                    presenter.increaseContrast(bitmap, progress)
                     prevContrastProgress = progress
                 return
             }
